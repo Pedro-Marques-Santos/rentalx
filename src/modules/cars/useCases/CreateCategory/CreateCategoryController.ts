@@ -1,14 +1,18 @@
 import { Response, Request } from 'express'
+import "reflect-metadata";
+import { container } from 'tsyringe';
+
+//como estamos utilizando o tsyringe, ele gera um new objeto automaticamente
 import { CreateCategoryUseCase } from './CreateCategoryUseCase'
 
 class CreateCategoryController {
 
-  constructor(private createCategpryUseCase: CreateCategoryUseCase) { }
-
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { name, description } = request.body
 
-    this.createCategpryUseCase.execute({ name, description })
+    const createCategoryUseCase = container.resolve(CreateCategoryUseCase)
+
+    await createCategoryUseCase.execute({ name, description })
 
     return response.status(201).send()
   }

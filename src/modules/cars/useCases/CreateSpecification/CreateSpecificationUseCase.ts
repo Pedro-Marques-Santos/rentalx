@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { ISpecificationRepository } from "../../repositories/ISpecificationRepository";
 
 interface IRequest {
@@ -5,13 +6,15 @@ interface IRequest {
   description: string
 }
 
+//significa que essa class pode ser injetada
+@injectable()
 class CreateSpecificationUseCase {
-  private specificationRepository: ISpecificationRepository
 
   // fazendo isso para acessar os methodos do obj SpecificationCategory (!Create!)
-  constructor(specificationRepository: ISpecificationRepository) {
-    this.specificationRepository = specificationRepository
-  }
+  constructor(
+    @inject("SpecificationRepository")
+    private specificationRepository: ISpecificationRepository
+  ) { }
 
   // o method create de SpecificationRepository.ts vai ser acessado aqui
   execute({ name, description }: IRequest): void {
