@@ -21,7 +21,7 @@ export class CreateSpecifications1666957025978 implements MigrationInterface {
             type: "varchar"
           },
           {
-            name: "create_at",
+            name: "created_at",
             type: "timestamp",
             default: "now()"
           }
