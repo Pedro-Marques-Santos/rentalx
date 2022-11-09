@@ -3,6 +3,7 @@ import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUserRepository } from "../../repositories/IUserRepository";
 
 import { hash } from "bcryptjs"
+import { AppError } from "../../../../errors/AppErros";
 
 @injectable()
 class CreateUserCase {
@@ -16,7 +17,7 @@ class CreateUserCase {
     const userAlreadyExists = await this.usersRepository.findByEmail(email)
 
     if (userAlreadyExists) {
-      throw new Error("User already exists");
+      throw new AppError("User already exists");
     }
 
     //criptografar senha
